@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<info>
+    <id>mailinglists</id>
+    <name>Mailing Lists</name>
+    <description>Manage Mailing Lists with OwnCloud</description>
+    <licence>AGPL</licence>
+    <author>Mario Frese</author>
+    <version>0.1</version>
+    <namespace>MailingLists</namespace>
+    <category>other</category>
+    <dependencies>
+        <owncloud min-version="8.2" />
+    </dependencies>
+</info>

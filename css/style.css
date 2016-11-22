@@ -1,0 +1,53 @@
+h1 {
+	font-size: 20px;
+	padding: 10px;
+}
+
+h2 {
+	font-size: 16px;
+	padding-left: 10px;
+}
+
+.ml-flex {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.ml-flex > * {
+	padding: 10px;
+	flex: auto;
+}
+
+.ml-member {
+	flex: auto;
+	margin-left: 10px;
+	padding: 1px;
+}
+
+.ml-list {
+	padding-top: 10px;
+}
+
+.ml-flex-minimum {
+	flex: none;
+}
+
+.ml-header {
+	width: auto;
+}
+
+.ml-vertical-middle {
+    align-items: center;
+}
+
+.ml-thin-border-bottom {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.ml-hidden {
+	display: none;
+}
+
+.ml-red {
+	color: red;
+}
