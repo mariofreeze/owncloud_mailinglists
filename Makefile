@@ -136,6 +136,7 @@ appstore:
 	--exclude="../$(app_name)/build" \
 	--exclude="../$(app_name)/tests" \
 	--exclude="../$(app_name)/Makefile" \
+	--exclude="../$(app_name)/RemoteSystemsTempFiles" \
 	--exclude="../$(app_name)/*.log" \
 	--exclude="../$(app_name)/phpunit*xml" \
 	--exclude="../$(app_name)/composer.*" \
@@ -166,9 +167,11 @@ ifneq (,$(wildcard $(CURDIR)/package.json))
 	$(npm) run test
 endif
 ifeq (, $(shell which phpunit 2> /dev/null))
+ifeq ("$(wildcard $(build_tools_directory)/phpunit.phar)", "")
 	@echo "No phpunit command available, downloading a copy from the web"
 	mkdir -p $(build_tools_directory)
 	curl -sSL https://phar.phpunit.de/phpunit.phar -o $(build_tools_directory)/phpunit.phar
+endif
 	php $(build_tools_directory)/phpunit.phar -c phpunit.xml
 	php $(build_tools_directory)/phpunit.phar -c phpunit.integration.xml
 else
