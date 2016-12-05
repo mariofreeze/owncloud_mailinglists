@@ -1,4 +1,4 @@
-# owncloud_mailinglists
+# OwnCloud App Mailing List Manager
 OwnCloud App to manage mailing lists.
 In the first step this app is implemented for ezmlm mailing lists.
 
@@ -16,16 +16,20 @@ The add/remove of a moderator becomes effective immediately.
 
 3. Configuration Features
 -------------------------
+The type of mailing list - currently only ezmlm. 
+The user group which can access the security relevant features like add/remove moderators.
 
-You can configure the ezmlm home directory.
-
+For ezmlm lists you can configure:
+- the ezmlm home directory where each subdirectory contains a separate mailing list
+- the domain used for sub/unsubscribe emails
 
 Prerequisites
 =============
 The own cloud installation must be on the same server as the ezmlm installation.
 The PATH must contain ezmlm-sub and ezmlm-unsub for the moderation features to work.
 
-Possible Features:
+Possible Features
+=================
 - Configurable if all users can see all lists/subscribers for OC 9.0
 - Create new Lists
 - Show the archive mails for ezmlm-idx lists
