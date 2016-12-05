@@ -42,16 +42,23 @@
 			
 			setAdminKey: function(key, value) {
 				var deferred = $.Deferred();
+				var data = {
+					key: key,
+					value: value
+				};
+//				var url = this._baseUrl + '/' + key + '/' + encodeURIComponent(value);
+				var url = this._baseUrl;
 				$.ajax({
-					url: this._baseUrl + '/' + key + '/' + value,
-					method: 'POST'
+					url: url,
+					method: 'POST',
+					data: data
 				}).done(function( data ) {
-					$('.msg-mailinglists').addClass("msg_success");
-					$('.msg-mailinglists').text(t('MailingLists', 'Successfully set ') + ' ' + key + ' to ' + value);
+					$('#ml-msg').addClass("ml-msg-success");
+					$('#ml-msg').text(t('MailingLists', 'Successfully set ') + ' ' + key + ' to ' + value);
 					deferred.resolve(data);
 				}).fail(function() {
-					$('.msg-mailinglists').addClass("msg_error");
-					$('.msg-mailinglists').text(t('MailingLists', 'Error while saving field') + ' ' + key + '!');
+					$('#ml-msg').addClass("ml-msg-error");
+					$('#ml-msg').text(t('MailingLists', 'Error while saving field') + ' ' + key + '!');
 					deferred.reject();
 				});
 			},
@@ -72,17 +79,35 @@
 		View.prototype = {
 			render: function () {
 				// fill the boxes
+				if (settings.getKey('backend').toLowerCase() == 'ezmlm') {
+					$('#ezmlm_settings').removeClass('ml-hidden');
+				}
+				$('#ezmlm_home_dir').val(settings.getKey('ezmlm_home'));
+				$('#ezmlm_home_dir').change(function () {
+					settings.setAdminKey('ezmlm_home', $(this).val().replace(/\/*\s*$/, ""));
+				});
+				$('#ezmlm_domain').val(settings.getKey('ezmlm_domain'));
+				$('#ezmlm_domain').change(function () {
+					settings.setAdminKey('ezmlm_domain', $(this).val().trim().replace(/^@*/, ""));
+				});
+
+				
 				$('#backend_fake').prop('checked', (settings.getKey('backend').toLowerCase() == 'development'));
 				$('#backend_fake').change(function () {
 					settings.setAdminKey('backend', $(this).val());
+					$('#ezmlm_settings').addClass('ml-hidden');
 				});
+				
 				$('#backend_ezmlm').prop('checked', (settings.getKey('backend').toLowerCase() == 'ezmlm'));
 				$('#backend_ezmlm').change(function () {
 					settings.setAdminKey('backend', $(this).val());
+					$('#ezmlm_settings').removeClass('ml-hidden');
 				});
+				
 				$('#backend_mailman').prop('checked', (settings.getKey('backend').toLowerCase() == 'mailman'));
 				$('#backend_mailman').change(function () {
 					settings.setAdminKey('backend', $(this).val());
+					$('#ezmlm_settings').addClass('ml-hidden');
 				});
 				
 				var groups = $('#group-tpl').html();

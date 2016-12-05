@@ -33,7 +33,7 @@ $application->registerRoutes(
 			['name' => 'list#removeModerator', 'url' => '/list/{name}/{moderator}', 'verb' => 'DELETE'],
 			['name' => 'list#addModerator', 'url' => '/list/{name}/{moderator}', 'verb' => 'POST'],
 			['name' => 'settings#get', 'url' => '/settings', 'verb' => 'GET'],
-			['name' => 'settings#set', 'url' => '/settings/{key}/{value}', 'verb' => 'POST'],
+			['name' => 'settings#set', 'url' => '/settings', 'verb' => 'POST'],
 				
 		]
 	]

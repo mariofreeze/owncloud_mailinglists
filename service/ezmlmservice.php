@@ -13,13 +13,17 @@ namespace OCA\MailingLists\Service;
 
 class EzmlmService implements IListService {
 
-    public function __construct(){
+	private $homeDir;
+	
+    public function __construct($homeDir, $domain){
+    	$this->homeDir = $homeDir;
+    	$this->domain = $domain;
     }
 
     public function loadAll() {
 		$output = [];
 		$result = [];
-		exec('cd ~/ezmlm; ls -d -1 */', $output);
+		exec('cd '.$this->homeDir.'; ls -d -1 */', $output);
 		foreach ($output as $key => $value) {
 			if (substr($value, 0, 4 ) != "test") {
 				$result[$key] = trim(rtrim($value, "/"));
@@ -32,29 +36,30 @@ class EzmlmService implements IListService {
     	try {
     		$output = ( object ) [ 
 					'prefix' => '',
+    				'domain' => $this->domain,
 					'subscribers' => [ ],
 					'allow' => [ ],
 					'mod' => [ ],
 			];
-			exec('ezmlm-list ~/ezmlm/' . $name, $subscribers);
+			exec('ezmlm-list '.$this->homeDir.'/' . $name, $subscribers);
 			sort($subscribers);
 			foreach ($subscribers as $key => $value) {
 				$output->subscribers[$key] = rtrim($value, "/");
 			}
 				
-			exec('ezmlm-list ~/ezmlm/' . $name . ' allow', $allow);
+			exec('ezmlm-list '.$this->homeDir.'/' . $name . ' allow', $allow);
 			sort($allow);
 			foreach ($allow as $key => $value) {
 				$output->allow[$key] = rtrim($value, "/");
 			}
 				
-			exec('ezmlm-list ~/ezmlm/' . $name . ' mod', $mod);
+			exec('ezmlm-list '.$this->homeDir.'/' . $name . ' mod', $mod);
 			sort($mod);
 			foreach ($mod as $key => $value) {
 				$output->mod[$key] = rtrim($value, "/");
 			}
 				
-			exec('cat ~/ezmlm/' . $name . '/prefix', $prefix);
+			exec('cat '.$this->homeDir.'/' . $name . '/prefix', $prefix);
 			foreach ($prefix as $key => $value) {
 				$output->prefix = rtrim(ltrim($value, "["),"]");		// can only be one
 			}
@@ -66,12 +71,12 @@ class EzmlmService implements IListService {
     }
 
 	public function removeModerator($name, $moderator) {
-		exec('ezmlm-unsub ~/ezmlm/' . $name . ' mod ' . $moderator, $prefix);
+		exec('ezmlm-unsub '.$this->homeDir.'/' . $name . ' mod ' . $moderator, $prefix);
 		return true;
 	}
 
 	public function addModerator($name, $moderator) {
-		$command = 'ezmlm-sub ~/ezmlm/' . $name . ' mod ' . $moderator;
+		$command = 'ezmlm-sub '.$this->homeDir.'/' . $name . ' mod ' . $moderator;
 		exec($command, $result, $returncode);
 		if ($returncode === 0) {
 			return true;

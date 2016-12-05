@@ -30,6 +30,7 @@ class FakeService implements IListService {
     public function load($name) {
     	$output = ( object ) [
     			'prefix' => '',
+    			'domain' => 'fakedomain.org',
     			'subscribers' => [ ],
     			'allow' => [ ],
     			'mod' => ['test1@home.de', 'test2@home.de'],

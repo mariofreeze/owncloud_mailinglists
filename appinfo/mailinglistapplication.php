@@ -21,6 +21,8 @@ use OCA\MailingLists\Service\FakeService;
 define('KEY_BACKEND', 'backend');
 define('KEY_ADMIN_GROUP', 'admin_group');
 define('KEY_GROUPS', 'groups');
+define('KEY_EZMLM_HOME', 'ezmlm_home');  // '~/ezmlm'
+define('KEY_EZMLM_DOMAIN', 'ezmlm_domain');
 
 define('KEY_BACKEND_DEV', 'Development');
 define('KEY_BACKEND_EZMLM', 'Ezmlm');
@@ -70,7 +72,10 @@ class MailingListApplication extends App {
 					return new FakeService();
 					break;
 				case KEY_BACKEND_EZMLM:
-					return new EzmlmService();
+					return new EzmlmService(
+						\OC::$server->getConfig()->getAppValue($c->query ( 'AppName' ), KEY_EZMLM_HOME),
+						\OC::$server->getConfig()->getAppValue($c->query ( 'AppName' ), KEY_EZMLM_DOMAIN)
+					);
 					break;
 				default:
 					throw new \Exception ( "Backend Service " . $backend . " not yet implemented." );

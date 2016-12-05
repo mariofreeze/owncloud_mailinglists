@@ -1,1 +1,17 @@
 @CHARSET "ISO-8859-1";
+
+.ml-hidden {
+	display: none;
+}
+
+.ml-msg {
+	
+}
+
+.ml-msg-success {
+	color: green; 
+}
+
+.ml-msg-error {
+	color: red; 
+}

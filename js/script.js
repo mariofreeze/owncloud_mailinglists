@@ -20,6 +20,7 @@
 		var MailingList = function (name) {
 			this._name = name;
 			this._prefix = '';
+			this._domain = '';
 			this._subscribers = [];
 			this._allow = [];
 			this._mod = [];
@@ -89,14 +90,13 @@
 					});
 
 					var url = this._baseUrl + '/list/' + name;
-//					var url = this._baseUrl + '/list';
 					$.ajax({
 						url: url,
 						method: 'GET',
-						//data: JSON.stringify(name)
 					}).done(function (data) {
 						var listData = data[0];
 						self._active._prefix = listData.prefix;
+						self._active._domain = listData.domain;
 						self._active._mod = listData.mod;
 						self._active._subscribers = listData.subscribers;
 						self._active._allow = listData.allow;
@@ -180,7 +180,7 @@
 							for (i = 0; i < subcribers.length; i++) {
 								var subscriber = {};
 								subscriber.email = subcribers[i];
-								subscriber.unsubscribeEMail = self._mailingLists.getActive()._name + (subMemberList != null ? '-'+subMemberList : '') + "-unsubscribe-" + subcribers[i].replace("@", "=") + "@freieschulefrankfurt.de";
+								subscriber.unsubscribeEMail = self._mailingLists.getActive()._name + (subMemberList != null ? '-'+subMemberList : '') + "-unsubscribe-" + subcribers[i].replace("@", "=") + "@" + self._mailingLists.getActive()._domain;
 								data.elements.push(subscriber);
 							}
 						}
@@ -191,7 +191,7 @@
 						$(targetElement).find('#ml-member-subscribe-email').first().on('keypress', function (e) {
 							if(e.which === 13){
 								e.preventDefault();
-								var email =  $('#ml-member-listname').val() + (subMemberList != null ? '-'+subMemberList : '') + "-subscribe-" +  this.value.replace("@", "=") + "@freieschulefrankfurt.de";
+								var email =  $('#ml-member-listname').val() + (subMemberList != null ? '-'+subMemberList : '') + "-subscribe-" +  this.value.replace("@", "=") + "@" + self._mailingLists.getActive()._domain;
 								var subject = 'New Subscription';
 								var emailBody = 'Not important';
 								window.location = 'mailto:' + email + '?subject=' + subject + '&body=' +   emailBody;

@@ -40,6 +40,8 @@ class SettingsService {
 				KEY_BACKEND => (string)$this->config->getAppValue($this->appName, KEY_BACKEND, KEY_BACKEND_DEV),
 				KEY_ADMIN_GROUP => (string)$this->config->getAppValue($this->appName, KEY_ADMIN_GROUP, 'admin'),
 				KEY_GROUPS => $group_id_list,
+				KEY_EZMLM_HOME => (string)$this->config->getAppValue($this->appName, KEY_EZMLM_HOME),
+				KEY_EZMLM_DOMAIN => (string)$this->config->getAppValue($this->appName, KEY_EZMLM_DOMAIN),
 				// user settings
 				//				'hide_attributes' => (string)$this->settings->getUserValue($this->userId, $this->appName, 'hide_attributes', 'false'),
 		);

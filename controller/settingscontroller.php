@@ -44,6 +44,8 @@ class SettingsController extends Controller {
 	}
 
 	public function set($key, $value) {
+// 		throw new \Exception ( "SettingsController set called for key ".$key." and value ".$value );
 		return new DataResponse( $this->settingsService->set($key, $value) );
 	}
+	
 }
